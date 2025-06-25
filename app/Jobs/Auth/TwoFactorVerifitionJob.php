@@ -33,8 +33,8 @@ class TwoFactorVerifitionJob implements ShouldQueue
     {
         try{
             Mail::to($this->email)->send(new TwoFactorVerifitionMail($this->email,$this->otp,$this->name));
-            Log::info(['success'=> '2fa accept mail send successfuly']);
-        }catch(Exception $e){
+
+        }catch(\Exception $e){
             Log::error(['error'=> $e->getMessage()]);
         }
     }

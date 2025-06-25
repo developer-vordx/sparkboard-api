@@ -17,8 +17,8 @@ class UserSeeder extends Seeder
     {
         // Create a few specific users (optional)
         User::create([
-            'first_name' => 'Admin',
-            'last_name' => 'User',
+            'name' => 'Admin User',
+            'username' => 'admin_user',
             'email_verified_at' => now(),
             'status'    => 'active',
             'remember_token' => Str::random(10),

@@ -86,39 +86,42 @@ class MakeServiceCommand extends Command
         // Create the provider if not exists
         if (!File::exists($providerPath)) {
             $providerTemplate = <<<PHP
-            <?php
+<?php
 
-            namespace App\Providers;
+namespace App\Providers;
 
-            use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\ServiceProvider;
 
-            class ServiceBindingProvider extends ServiceProvider
-            {
-                public function register()
-                {
-                    // Bindings will be appended here
-                }
+class ServiceBindingProvider extends ServiceProvider
+{
+    public function register()
+    {
+        // Bindings will be appended here
+    }
 
-                public function boot(): void {}
-            }
-            PHP;
+    public function boot(): void {}
+}
+PHP;
             File::put($providerPath, $providerTemplate);
             $this->components->info('Created ServiceBindingProvider');
         }
 
-        // Add binding if not already there
         $providerContent = File::get($providerPath);
 
-        if (!Str::contains($providerContent, $binding)) {
-            $providerContent = str_replace(
-                '// Bindings will be appended here',
-                "$binding\n        // Bindings will be appended here",
-                $providerContent
-            );
-            File::put($providerPath, $providerContent);
-            $this->components->info("Bound $interfaceFQCN to $serviceFQCN in ServiceBindingProvider.");
-        } else {
+        if (Str::contains($providerContent, $binding)) {
             $this->components->info("Binding already exists in ServiceBindingProvider.");
+            return;
         }
+
+        // Find 'public function register()' block and inject before its closing '}'
+        $updatedContent = preg_replace_callback('/public function register\(\)\s*\{(.*?)\}/s', function ($matches) use ($binding) {
+            $existing = trim($matches[1]);
+            $newContent = $existing . "\n        $binding";
+            return "public function register()\n    {\n        $newContent\n    }";
+        }, $providerContent);
+
+        File::put($providerPath, $updatedContent);
+        $this->components->info("Bound $interfaceFQCN to $serviceFQCN in ServiceBindingProvider.");
     }
+
 }

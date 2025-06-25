@@ -17,9 +17,9 @@ Route::prefix('v1')->middleware(['request_logs'])->group(function () {
 
 
     Route::get('facebook', [\App\Http\Controllers\Api\V1\Auth\FacebookController::class, 'redirectToFacebook']);
-    Route::get('facebook/callback', [\App\Http\Controllers\Api\V1\Auth\FacebookController::class, 'handleFacebookCallback']);
+    Route::get('facebook-callback', [\App\Http\Controllers\Api\V1\Auth\FacebookController::class, 'handleFacebookCallback']);
 
-    Route::post('signup', [\App\Http\Controllers\Api\V1\Auth\AuthController::class, 'signup']);
+    Route::post('sign-up', [\App\Http\Controllers\Api\V1\Auth\AuthController::class, 'signup']);
     Route::post('login', [\App\Http\Controllers\Api\V1\Auth\AuthController::class, 'login']);
 
     Route::post('forgot-password', [PasswordResetController::class, 'forgotPassword']);
@@ -28,7 +28,7 @@ Route::prefix('v1')->middleware(['request_logs'])->group(function () {
 
 Route::middleware(['auth'])->group(function () {
 
-    Route::post('/logout', [\App\Http\Controllers\Api\V1\Auth\AuthController::class, 'logout']);
+    Route::post('logout', [\App\Http\Controllers\Api\V1\Auth\AuthController::class, 'logout']);
 
     Route::prefix('user')->group(function () {
 
@@ -37,6 +37,10 @@ Route::middleware(['auth'])->group(function () {
         Route::post('change-password', [\App\Http\Controllers\Api\V1\User\ProfileController::class, 'updatePassword']);
         Route::post('/avatar', [\App\Http\Controllers\Api\V1\User\ProfileController::class, 'updateAvatar']);
         Route::post('change-email', [\App\Http\Controllers\Api\V1\User\ProfileController::class, 'updateEmail']);
+    });
+
+    Route::prefix('spark')->group(function () {
+       Route::post('/',[\App\Http\Controllers\Api\V1\Spark\SparkController::class, 'igniteSpark']);
     });
 
 });

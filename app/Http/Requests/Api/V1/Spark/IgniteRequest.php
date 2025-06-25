@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Requests\Api\V1\Auth;
+namespace App\Http\Requests\Api\V1\Spark;
 
 use App\Utils\BaseRequest;
 use Illuminate\Contracts\Validation\ValidationRule;
+use Illuminate\Foundation\Http\FormRequest;
 
-class SignUpRequest extends BaseRequest
+class IgniteRequest extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,10 +24,10 @@ class SignUpRequest extends BaseRequest
     public function rules(): array
     {
         return [
-            'username' => 'required|string|max:255|unique:users,username',
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|string|min:6|confirmed',
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'status' => 'required|in:public,anonymous',
+            'category_id' => 'required|exists:categories,id',
         ];
     }
 }
