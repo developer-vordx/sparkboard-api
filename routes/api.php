@@ -39,8 +39,10 @@ Route::middleware(['auth'])->group(function () {
         Route::post('change-email', [\App\Http\Controllers\Api\V1\User\ProfileController::class, 'updateEmail']);
     });
 
-    Route::prefix('spark')->group(function () {
+    Route::prefix('sparks')->group(function () {
+       Route::get('/',[\App\Http\Controllers\Api\V1\Spark\SparkController::class, 'exploreSpark']);
        Route::post('/',[\App\Http\Controllers\Api\V1\Spark\SparkController::class, 'igniteSpark']);
+       Route::get('/{id}',[\App\Http\Controllers\Api\V1\Spark\SparkController::class, 'igniteSpark']);
     });
 
 });

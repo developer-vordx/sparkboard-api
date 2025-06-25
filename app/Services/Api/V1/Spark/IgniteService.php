@@ -22,7 +22,7 @@ class IgniteService extends  BaseService  implements IgniteInterface
             $spark = $this->spark->create([
                 'title' => $request->title,
                 'description' => $request->description,
-                'status' => $request->status,
+                'visibility' => $request->status,
                 'user_id' => auth()->id(),
                 'category_id' => $request->category_id,
             ]);
