@@ -19,6 +19,8 @@ class ServiceBindingProvider extends ServiceProvider
         $this->app->bind(\App\Contracts\Api\V1\Spark\IgniteInterface::class, \App\Services\Api\V1\Spark\IgniteService::class);
         $this->app->bind(\App\Contracts\Api\V1\Spark\ExploreInterface::class, \App\Services\Api\V1\Spark\ExploreService::class);
         $this->app->bind(\App\Contracts\Api\V1\Spark\InsightInterface::class, \App\Services\Api\V1\Spark\InsightService::class);
+        $this->app->bind(\App\Contracts\Api\V1\Spark\LikeSparkInterface::class, \App\Services\Api\V1\Spark\LikeSparkService::class);
+        $this->app->bind(\App\Contracts\Api\V1\Spark\CommentSparkInterface::class, \App\Services\Api\V1\Spark\CommentSparkService::class);
     }
 
     public function boot(): void {}

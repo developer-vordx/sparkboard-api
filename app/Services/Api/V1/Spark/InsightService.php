@@ -25,6 +25,7 @@ class InsightService extends  BaseService  implements InsightInterface
                 ->withCount(['comments as total_comments'])
                 ->find($request->id);
 
+
             $comments = $spark->comments()->latest()->paginate(10);
 
             return success(

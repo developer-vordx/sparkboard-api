@@ -43,6 +43,8 @@ Route::middleware(['auth'])->group(function () {
        Route::get('/',[\App\Http\Controllers\Api\V1\Spark\SparkController::class, 'exploreSpark']);
        Route::post('/',[\App\Http\Controllers\Api\V1\Spark\SparkController::class, 'igniteSpark']);
        Route::get('/{id}/insight',[\App\Http\Controllers\Api\V1\Spark\SparkController::class, 'sparkInsights']);
+       Route::get('/{id}/like',[\App\Http\Controllers\Api\V1\Spark\SparkController::class, 'likeSpark']);
+       Route::post('/{id}/comments',[\App\Http\Controllers\Api\V1\Spark\SparkController::class, 'commentSpark']);
     });
 
 });
