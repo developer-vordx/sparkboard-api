@@ -12,6 +12,10 @@ class Spark extends Model
 
     protected $fillable = ['title', 'description', 'category_id', 'user_id','visibility'];
 
+    protected $hidden = [
+        'deleted_at',
+    ];
+
     public function category()
     {
         return $this->belongsTo(Category::class);

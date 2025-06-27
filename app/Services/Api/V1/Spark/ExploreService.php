@@ -21,7 +21,17 @@ class ExploreService extends  BaseService  implements ExploreInterface
                     Category::class,
                     Status::class,
                     Search::class,
-                ])->thenReturn()->with('category:id,name','user:id,username,name,image')->latest()
+                ])->thenReturn()->with('category:id,name','user:id,username,name,image')
+                ->selectRaw('
+                    id,
+                    user_id,
+                    category_id,
+                    title,
+                    description,
+                    visibility,
+                    DATE_FORMAT(created_at, "%M %d, %Y %h:%i %p") as created
+                ')->latest()->withCount(['likes as total_likes'])
+                ->withCount(['comments as total_comments'])
                 ->paginate(15);
 
             $data = preparePagination($sparks);
@@ -37,9 +47,8 @@ class ExploreService extends  BaseService  implements ExploreInterface
             $this->logException($exception);
             return errors(
                 'Failed to fetch Sparks. Please try again later.',
-                500,
-                $exception->getMessage()
-            );
+                $exception->getMessage(),
+                500);
         }
     }
 }

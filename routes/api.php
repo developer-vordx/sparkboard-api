@@ -42,7 +42,7 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('sparks')->group(function () {
        Route::get('/',[\App\Http\Controllers\Api\V1\Spark\SparkController::class, 'exploreSpark']);
        Route::post('/',[\App\Http\Controllers\Api\V1\Spark\SparkController::class, 'igniteSpark']);
-       Route::get('/{id}',[\App\Http\Controllers\Api\V1\Spark\SparkController::class, 'igniteSpark']);
+       Route::get('/{id}/insight',[\App\Http\Controllers\Api\V1\Spark\SparkController::class, 'sparkInsights']);
     });
 
 });
