@@ -23,8 +23,15 @@ class InsightService extends  BaseService  implements InsightInterface
                 ->with('category:id,name')
                 ->withCount(['likes as total_likes'])
                 ->withCount(['comments as total_comments'])
+                ->withCount(['views as total_views'])
                 ->find($request->id);
 
+            if ($spark->user_id !== auth()->id()) {
+                \App\Models\SparkView::create([
+                    'spark_id' => $spark->id,
+                    'user_id'  => auth()->id(),
+                ]);
+            }
 
             $comments = $spark->comments()->latest()->paginate(10);
 

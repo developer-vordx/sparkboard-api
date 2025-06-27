@@ -32,6 +32,7 @@ class ExploreService extends  BaseService  implements ExploreInterface
                     DATE_FORMAT(created_at, "%M %d, %Y %h:%i %p") as created
                 ')->latest()->withCount(['likes as total_likes'])
                 ->withCount(['comments as total_comments'])
+                ->withCount(['views as total_views'])
                 ->paginate(15);
 
             $data = preparePagination($sparks);
